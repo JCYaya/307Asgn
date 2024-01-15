@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import Table from "./Table";
 import Form from "./Form";
 
-// src/MyApp.js
 function MyApp() {
+
+   function updateList(person) {
+     setCharacters([...characters, person]);
+   }
   const [characters, setCharacters] = useState([]);
 
   function removeOneCharacter(index) {
@@ -20,7 +23,7 @@ function MyApp() {
       characterData={characters}
       removeCharacter={removeOneCharacter}
     />
-    <Form />
+    <Form handleSubmit={updateList} />
   </div>
   );
 }
