@@ -7,12 +7,12 @@ const port = 8000;
 const users = {
 	users_list: [
 	   {
-         id: "xyz789",
-	     	name: "Charlie",
+          id: "xyz789",
+	      name: "Charlie",
 	      job: "Janitor"
 	   },
 	   {
-       	id: "abc123",
+       	  id: "abc123",
 	      name: "Mac",
 	      job: "Bouncer"
 	   },
@@ -48,7 +48,15 @@ const addUser = (user) => {
   return user;
 };
 
-
+const getIndexById = (userToRemove) => {
+	for (let i = 0; i < users["users_list"].length; i++) {
+		if (users["users_list"][i]["id"] === userToRemove["id"]) {
+			return i;
+		}
+	}
+	
+	return -1;
+};
 
 app.use(express.json());
 
@@ -81,6 +89,18 @@ app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
   res.send();
+});
+
+app.delete("/users", (req, res) => {
+	const userToRemove = req.body;
+	let userIdx = getIndexById(userToRemove);
+	if (userIdx === -1) {
+	   res.status(404).send("User doesn't exist.");
+	}
+	else {
+	   users["users_list"].splice(userIdx, 1);
+	   res.send();
+	}
 });
 
 app.listen(port, () => {
