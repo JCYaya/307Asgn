@@ -43,6 +43,12 @@ const findUserByName = (name) => {
   );
 };
 
+const findUserByJob = (list, job) => {
+	return list.filter(
+	   (user) => user["job"] === job
+	);
+};
+   
 const addUser = (user) => {
   users["users_list"].push(user);
   return user;
@@ -66,11 +72,29 @@ app.get("/", (req, res) => {
 
 app.get("/users", (req, res) => {
   const name = req.query.name;
-  if (name != undefined) {
-    let result = findUserByName(name);
+  const job = req.query.job;
+  
+  if (name != undefined || job != undefined) {
+	let result;
+	
+	if (name != undefined) { //name is present
+		result = findUserByName(name);
+		
+		if (job != undefined) { //name & job are present
+			result = findUserByJob(result, job);
+		}
+	}
+	
+	else if (name == undefined && job != undefined) { //only job is present
+		result = findUserByJob(users["users_list"], job);
+	}
+
     result = { users_list: result };
     res.send(result);
-  } else {
+  } 
+
+  
+  else {
     res.send(users);
   }
 });
@@ -84,6 +108,7 @@ app.get("/users/:id", (req, res) => {
     res.send(result);
   }
 });
+
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
