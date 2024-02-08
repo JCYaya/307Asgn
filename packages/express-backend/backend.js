@@ -1,5 +1,6 @@
 //backend.js
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
@@ -7,12 +8,12 @@ const port = 8000;
 const users = {
 	users_list: [
 	   {
-          id: "xyz789",
+         id: "xyz789",
 	      name: "Charlie",
 	      job: "Janitor"
 	   },
 	   {
-       	  id: "abc123",
+       	id: "abc123",
 	      name: "Mac",
 	      job: "Bouncer"
 	   },
@@ -64,6 +65,7 @@ const getIndexById = (userToRemove) => {
 	return -1;
 };
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -108,7 +110,6 @@ app.get("/users/:id", (req, res) => {
     res.send(result);
   }
 });
-
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
