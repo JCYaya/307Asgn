@@ -7,7 +7,8 @@ function MyApp() {
 
    function updateList(person) { 
 		postUser(person)
-      .then(() => setCharacters([...characters, person]))
+		.then((res) => res.json())
+      .then((json) => setCharacters([...characters, json]))
       .catch((error) => {
         console.log(error);
       })
