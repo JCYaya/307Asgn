@@ -49,8 +49,14 @@ const findUserByJob = (list, job) => {
 	   (user) => user["job"] === job
 	);
 };
-   
+
+const generateId = () => {
+	let num = Math.ceil(Math.random()*1000000);
+	return num.toString();
+};
+
 const addUser = (user) => {
+  user.id = generateId();
   users["users_list"].push(user);
   return user;
 };
@@ -114,7 +120,7 @@ app.get("/users/:id", (req, res) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
-  res.send();
+  res.status(201).send(userToAdd);
 });
 
 app.delete("/users", (req, res) => {

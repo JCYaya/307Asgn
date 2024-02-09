@@ -15,10 +15,12 @@ function MyApp() {
    const [characters, setCharacters] = useState([]);
 
    function removeOneCharacter(index) {
+		let user = characters[index];
 		const updated = characters.filter((character, i) => {
       return i !== index;
    });
     setCharacters(updated);
+	 deleteUser(user);
    }
   
 	function fetchUsers() {
@@ -36,6 +38,18 @@ function MyApp() {
 	function postUser(person) {
 		const promise = fetch("Http://localhost:8000/users", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(person),
+   });
+
+    return promise;
+  }
+  
+  	function deleteUser(person) {
+		const promise = fetch("Http://localhost:8000/users", {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
