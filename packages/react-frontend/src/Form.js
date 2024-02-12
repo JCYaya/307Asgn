@@ -1,7 +1,6 @@
 // src/Form.js
 import React, { useState } from "react";
 
-
 function Form(props) {
   const [person, setPerson] = useState({
     name: "",
@@ -14,7 +13,6 @@ function Form(props) {
     setPerson({ name: person["name"], job: value });
   else setPerson({ name: value, job: person["job"] });
   }
-
 
   function submitForm() {
   props.handleSubmit(person);
@@ -44,6 +42,5 @@ function Form(props) {
 );
 
 }
-
 
 export default Form;
